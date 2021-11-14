@@ -20,9 +20,10 @@ if [ -z "$CC" ]; then
   esac
 fi
 
-# switch to ROOT
-cd "${_ROOT_DIR_}"
-
+make_test_env() {
+  cd "${_ROOT_DIR_}"
+  mkdir -p out
+}
 
 test_do() {
   local rc=0
@@ -34,6 +35,7 @@ test_do() {
 
 # basic test
 if [ "basic" = "$_TEST_" ]; then
+  make_test_env
   test_do --has-algo
 fi
 
