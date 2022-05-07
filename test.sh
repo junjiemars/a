@@ -42,6 +42,8 @@ test_darwin_do() {
   
   echo "XXX"
   
+  echo '' | cc -v -E &> out/h.list
+  
   return $rc
 }
 
