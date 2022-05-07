@@ -60,7 +60,7 @@ jobs:
       - name: Install Dependencies
         run: |
           brew update
-          brew install --HEAD universal-ctags/universal-ctags/universal-ctags
+          # brew install --HEAD universal-ctags/universal-ctags/universal-ctags
           # brew install automake
           # brew install libuv
           # brew install node
