@@ -40,10 +40,9 @@ test_darwin_do() {
   echo "------------"
   echo "# $*"
   
-  echo "XXX"
-  
   $CC --version
   ctags --version
+  readtags --version
   
   echo '' | $CC -v -E 2>&1 >/dev/null -
   
