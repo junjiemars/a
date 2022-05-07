@@ -42,6 +42,8 @@ test_darwin_do() {
   
   echo "XXX"
   
+  $CC --version
+  
   echo '' | $CC -v -E ; echo $0
   
   find /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
