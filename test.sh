@@ -36,7 +36,7 @@ test_do() {
 # basic test
 if [ "basic" = "$_TEST_" ]; then
   make_test_env
-  test_do --has-algo
+  man stat(2)
 fi
 
 echo "!completed"
