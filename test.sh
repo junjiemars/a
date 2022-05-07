@@ -25,19 +25,52 @@ make_test_env() {
   mkdir -p out
 }
 
-test_do() {
+test_linux_do() {
   local rc=0
   local cfg="$_CFG_OPT_ $*"
   echo "------------"
   echo "# $*"
+  
+  return $rc
+}
+
+test_darwin_do() {
+  local rc=0
+  local cfg="$_CFG_OPT_ $*"
+  echo "------------"
+  echo "# $*"
+  
+  echo "XXX"
+  
+  return $rc
+}
+
+test_winnt_do() {
+  local rc=0
+  local cfg="$_CFG_OPT_ $*"
+  echo "------------"
+  echo "# $*"
+  
   return $rc
 }
 
 # basic test
 if [ "basic" = "$_TEST_" ]; then
   make_test_env
-  man 2 stat
+  
+  case "$_OS_NAME_" in
+    Darwin)
+      test_darwin_do
+      ;;
+    Linux)
+      test_linux_do
+      ;;
+    WinNT)
+      test_winnt_do
+      ;;
+  esac
 fi
+
 
 echo "!completed"
 
