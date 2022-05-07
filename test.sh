@@ -36,7 +36,7 @@ test_do() {
 # basic test
 if [ "basic" = "$_TEST_" ]; then
   make_test_env
-  man stat(2)
+  man 2 stat
 fi
 
 echo "!completed"
