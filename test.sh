@@ -43,6 +43,7 @@ test_darwin_do() {
   echo "XXX"
   
   $CC --version
+  ctags --version
   
   echo '' | $CC -v -E 2>&1 >/dev/null -
   
