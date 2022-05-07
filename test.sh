@@ -46,6 +46,11 @@ test_darwin_do() {
   
   echo '' | $CC -v -E 2>&1 >/dev/null -
   
+  ctags -a -oout/x.TAGS                                                                                                     \
+        /usr/local/include                                                                                                  \
+        /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include  \
+        /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include   \
+        /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
 
   
   return $rc
