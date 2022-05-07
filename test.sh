@@ -46,20 +46,20 @@ test_darwin_do() {
   
   echo '' | $CC -v -E 2>&1 >/dev/null -
   
-  find                                                                                                                      \
-        /usr/local/include                                                                                                  \
-        /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include  \
-        /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include   \
-        /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include                   \
-  \( -type f -exec grep -q -e major \{\} \; \) -ls
-  
-  echo "--------------------"
-
-  # ctags -a -oout/x.TAGS                                                                                                     \
+  # find                                                                                                                      \
   #       /usr/local/include                                                                                                  \
   #       /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include  \
   #       /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include   \
-  #       /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
+  #       /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include                   \
+  # \( -type f -exec grep -q -e major \{\} \; \) -ls
+  
+  echo "--------------------"
+
+  ctags -a --c-kinds=+p -oout/x.TAGS                                                                                        \
+        /usr/local/include                                                                                                  \
+        /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include  \
+        /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include   \
+        /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
 
   
   return $rc
