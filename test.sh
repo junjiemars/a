@@ -42,7 +42,9 @@ test_darwin_do() {
   
   echo "XXX"
   
-  echo '' | $CC -v -E &> out/h.list
+  echo '' | $CC -v -E ; echo $0
+  
+  find /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin
   
   return $rc
 }
