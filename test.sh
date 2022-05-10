@@ -25,6 +25,14 @@ make_test_env() {
   mkdir -p out
 }
 
+print_test_env() {
+  echo "_ROOT_DIR_=${_DIR_}"
+  echo "_TEST_=${_TEST_}"
+  echo "_CFG_OPT_=${_OPT_}"
+  echo "_OS_NAME_=${_NAME_}"
+  echo "CC=${CC}"
+}
+
 test_linux_do() {
   local rc=0
   local cfg="$_CFG_OPT_ $*"
@@ -40,28 +48,6 @@ test_darwin_do() {
   echo "------------"
   echo "# $*"
   
-  $CC --version
-  # ctags --version
-  # readtags --version
-  
-  echo '' | $CC -v -E 2>&1 >/dev/null -
-  
-  # find                                                                                                                      \
-  #       /usr/local/include                                                                                                  \
-  #       /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include  \
-  #       /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include   \
-  #       /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include                   \
-  # \( -type f -exec grep -q -e major \{\} \; \) -ls
-  
-  echo "--------------------"
-
-  ctags -a -R --c-kinds=+p --verbose=yes -oout/x.TAGS                                                                          \
-        /usr/local/include                                                                                                  \
-        /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/13.0.0/include  \
-        /Applications/Xcode_13.2.1.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include   \
-        /Applications/Xcode_13.2.1.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
-
-  
   return $rc
 }
 
@@ -76,7 +62,9 @@ test_winnt_do() {
 
 # basic test
 if [ "basic" = "$_TEST_" ]; then
+  
   make_test_env
+  print_test_env
   
   case "$_OS_NAME_" in
     Darwin)
