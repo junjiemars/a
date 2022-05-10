@@ -26,10 +26,10 @@ make_test_env() {
 }
 
 print_test_env() {
-  echo "_ROOT_DIR_=${_DIR_}"
+  echo "_ROOT_DIR_=${_ROOT_DIR_}"
   echo "_TEST_=${_TEST_}"
-  echo "_CFG_OPT_=${_OPT_}"
-  echo "_OS_NAME_=${_NAME_}"
+  echo "_CFG_OPT_=${_CFG_OPT_}"
+  echo "_OS_NAME_=${_OS_NAME_}"
   echo "CC=${CC}"
 }
 
