@@ -69,6 +69,8 @@ test_winnt_do() {
   echo "------------"
   echo "# $*"
   
+  make_test_cc_env
+  
   return $rc
 }
 
