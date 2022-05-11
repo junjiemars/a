@@ -33,7 +33,7 @@ make_test_cc_env() {
   pushd "${d}"
 
   curl $b -sSfL | sh -s -- --branch=edge && ./configure where
-  
+
   popd
 }
 
@@ -50,7 +50,7 @@ test_linux_do() {
   local cfg="$_CFG_OPT_ $*"
   echo "------------"
   echo "# $*"
-  
+
   return $rc
 }
 
@@ -59,7 +59,7 @@ test_darwin_do() {
   local cfg="$_CFG_OPT_ $*"
   echo "------------"
   echo "# $*"
-  
+
   return $rc
 }
 
@@ -68,18 +68,32 @@ test_winnt_do() {
   local cfg="$_CFG_OPT_ $*"
   echo "------------"
   echo "# $*"
-  
+
   make_test_cc_env
-  
+  pushd "${_ROOT_DIR_}/${_CC_DIR_}"
+
+  cat <<END > c.c
+#include <stdio.h>
+int main(void)
+{
+  printf("yoo\n");
+}
+END
+
+  ./configure
+  make clean test
+
+  popd
+
   return $rc
 }
 
 # basic test
 if [ "basic" = "$_TEST_" ]; then
-  
+
   make_test_env
   print_test_env
-  
+
   case "$_OS_NAME_" in
     Darwin)
       test_darwin_do
