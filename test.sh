@@ -96,7 +96,7 @@ c_test: c
 END
 
   ./configure --out-dir="${_ROOT_DIR_}/out"
-  make clean test
+  make clean c_test
 
   popd
 
