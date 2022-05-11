@@ -88,9 +88,11 @@ test_install_from_github () {
   if [ -d "$_CI_DIR_" ]; then
     rm -r "${_CI_DIR_}"
   fi
-  mkdir -p "$_CI_DIR_" && cd "$_CI_DIR_"
+  mkdir -p "$_CI_DIR_"
 
   curl $b -sSfL | sh -s -- --branch=$_BRANCH_
+
+
 }
 
 test_make_print_database () {
@@ -303,7 +305,7 @@ test_install_from_github
 env_ci_build
 # test_make_print_database
 # test_nore_where_command
-test_nore_new_option
+# test_nore_new_option
 # test_nore_symbol_option
 # test_nore_optimize_option
 # test_nore_std_option
