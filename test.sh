@@ -84,10 +84,10 @@ END
   ls -lh "${_ROOT_DIR_}/${_OUT_DIR_}/Makefile"
 
   cat <<END > Makefile
-include ${_ROOT_DIR_}/${_OUT_DIR_}/Makefile
+include \${out}/Makefile
 
 c_root := ./
-c_binout := \${CURDIR}/\$(bin_path)/c\$(bin_ext)
+c_binout := \$(bin_path)/c\$(bin_ext)
 
 c: \$(c_binout)
 c_test: c
