@@ -89,7 +89,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - CC: "cl"
+          # - CC: "cl"
           - CC: "gcc"
     defaults:
       run:

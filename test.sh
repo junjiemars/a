@@ -7,6 +7,7 @@ _OS_NAME_="`uname -s 2>/dev/null`"
 _WIN_ENV_=
 _WIN_ENV_MSVC_=
 _CC_DIR_="cc"
+_OUT_DIR_="out"
 
 case "$_OS_NAME_" in
   MSYS_NT-*|MINGW??_NT-*) _OS_NAME_="WinNT" ;;
@@ -22,8 +23,7 @@ if [ -z "$CC" ]; then
 fi
 
 make_test_env() {
-  cd "${_ROOT_DIR_}"
-  mkdir -p out
+  mkdir -p "${_ROOT_DIR_}/${_OUT_DIR_}"
 }
 
 make_test_cc_env() {
@@ -66,6 +66,7 @@ test_darwin_do() {
 test_winnt_do() {
   local rc=0
   local cfg="$_CFG_OPT_ $*"
+  local out="${_ROOT_DIR_}/${_OUT_DIR_}"
   echo "------------"
   echo "# $*"
 
@@ -80,13 +81,11 @@ int main(void)
 }
 END
 
-  ./configure
-
   cat <<END > Makefile
 include out/Makefile
 
 c_root := ./
-c_binout := \$(bin_path)/c\$(bin_ext)
+c_binout := \${CURDIR}/\$(bin_path)/c\$(bin_ext)
 
 c: \$(c_binout)
 c_test: c
@@ -97,7 +96,7 @@ c_test: c
 
 END
 
-  ./configure --out-dir="${_ROOT_DIR_}/out"
+  ./configure --out-dir="${out}"
   make clean c_test
 
   popd
