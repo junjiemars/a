@@ -80,6 +80,8 @@ int main(void)
 }
 END
 
+  ./configure
+
   cat <<END > Makefile
 include out/Makefile
 
@@ -88,7 +90,7 @@ c_binout := \$(bin_path)/c\$(bin_ext)
 
 c: \$(c_binout)
 c_test: c
-	\$(c_binout) 5
+	\$(c_binout)
 
 \$(c_binout): \$(c_root)/c.c
 	\$(CC) \$(CFLAGS) \$(INC) \$^ \$(bin_out)\$@
