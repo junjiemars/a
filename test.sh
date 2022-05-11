@@ -81,8 +81,10 @@ int main(void)
 }
 END
 
+  ls -lh "${_ROOT_DIR_}/${_OUT_DIR_}/Makefile"
+
   cat <<END > Makefile
-include \${CURDIR}/out/Makefile
+include ${_ROOT_DIR_}/${_OUT_DIR_}/Makefile
 
 c_root := ./
 c_binout := \${CURDIR}/\$(bin_path)/c\$(bin_ext)
