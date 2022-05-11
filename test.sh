@@ -82,7 +82,7 @@ int main(void)
 END
 
   cat <<END > Makefile
-include out/Makefile
+include ${CURDIR}/out/Makefile
 
 c_root := ./
 c_binout := \${CURDIR}/\$(bin_path)/c\$(bin_ext)
