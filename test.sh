@@ -83,16 +83,14 @@ END
 }
 
 test_install_from_github () {
-  local b="https://raw.githubusercontent.com/junjiemars/nore/master/bootstrap.sh"
-  test_what "install from github.com"
+  local b="https://github.com/junjiemars/nore.git"
+  test_what "clone Nore from github.com"
   if [ -d "$_CI_DIR_" ]; then
     rm -r "${_CI_DIR_}"
   fi
   mkdir -p "$_CI_DIR_"
 
-  curl $b -sSfL | sh -s -- --branch=$_BRANCH_
-
-
+  git clone --depth=1 --branch=$_BRANCH_ "$b"
 }
 
 test_make_print_database () {
