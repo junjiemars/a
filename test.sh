@@ -80,7 +80,22 @@ int main(void)
 }
 END
 
-  ./configure
+  cat <<END > Makefile
+include out/Makefile
+
+c_root := ./
+c_binout := \$(bin_path)/c\$(bin_ext)
+
+c: \$(c_binout)
+c_test: c
+	\$(c_binout) 5
+
+\$(c_binout): \$(c_root)/c.c
+	\$(CC) \$(CFLAGS) \$(INC) \$^ \$(bin_out)\$@
+
+END
+
+  ./configure --out-dir="${_ROOT_DIR_}/out"
   make clean test
 
   popd
