@@ -71,7 +71,7 @@ test_winnt_do() {
   echo "# $*"
 
   make_test_cc_env
-  pushd "${_ROOT_DIR_}/${_CC_DIR_}"
+  pushd "${out}"
 
   cat <<END > c.c
 #include <stdio.h>
@@ -81,10 +81,10 @@ int main(void)
 }
 END
 
-  ls -lh "${_ROOT_DIR_}/${_OUT_DIR_}/Makefile"
+  ls -lh "${out}/Makefile"
 
   cat <<END > Makefile
-include \${out}/Makefile
+include ${out}/Makefile
 
 c_root := ./
 c_binout := \$(bin_path)/c\$(bin_ext)
