@@ -6,6 +6,7 @@ _CFG_OPT_="${_CFG_OPT_}"
 _OS_NAME_="`uname -s 2>/dev/null`"
 _WIN_ENV_=
 _WIN_ENV_MSVC_=
+_CC_DIR_="cc"
 
 case "$_OS_NAME_" in
   MSYS_NT-*|MINGW??_NT-*) _OS_NAME_="WinNT" ;;
@@ -23,6 +24,17 @@ fi
 make_test_env() {
   cd "${_ROOT_DIR_}"
   mkdir -p out
+}
+
+make_test_cc_env() {
+  local b="https://raw.githubusercontent.com/junjiemars/nore/master/bootstrap.sh"
+  local d="${_ROOT_DIR_}/${_CC_DIR_}"
+  mkdir -p "$d"
+  pushd "${d}"
+
+  curl $b -sSfL | sh -s -- --branch=edge && ./configure where
+  
+  popd
 }
 
 print_test_env() {
