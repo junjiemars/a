@@ -119,7 +119,7 @@ jobs:
          ./test.sh
     - name: Zip Build Artifact
       env:
-        _ZIP_X_: -x "out/tmp/*" -x "out/var/*" -x "*.ilk" -x "*.pdb" -x "*.obj" -x "*.exp"
+        _ZIP_X_:
       run: |
         zip -r c-windows-${{ env._OS_ARCH_ }}.zip out/ ${{ env._ZIP_X_ }}
     - name: Upload Build Artifact

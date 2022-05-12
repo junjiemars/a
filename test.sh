@@ -178,9 +178,6 @@ test_nore_where_command
 test_c_program
 
 
-# clean CI directory
-[ -d "${_CI_DIR_}" ] && rm -r "${_CI_DIR_}"
-
 echo "#!completed"
 
 # eof
