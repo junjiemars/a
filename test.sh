@@ -33,12 +33,7 @@ env_ci_build () {
   echo "_CI_DIR_=$_CI_DIR_"
   echo "------------"
 
-  if [ ! -f "${_ROOT_DIR_%/}/bootstrap.sh" ]; then
-    echo "!panic: ${_ROOT_DIR_%/}/bootstrap.sh no found"
-    exit 1
-  fi
   cd "${_CI_DIR_}"
-  ${_ROOT_DIR_%/}/bootstrap.sh --branch=${_BRANCH_}
 
   if [ "WinNT" = "${_OS_NAME_}" -a "cl" = "${CC}" ]; then
     if [ ! -f "${HOME}/.nore/cc-env.sh" ]; then
@@ -82,15 +77,15 @@ END
   fi
 }
 
-test_install_from_github () {
-  local b="https://github.com/junjiemars/nore.git"
-  test_what "clone Nore from github.com"
+install_nore_from_github () {
+  # local b="https://raw.githubusercontent.com/junjiemars/nore/master/bootstrap.sh"
+  test_what "install from github.com"
   if [ -d "$_CI_DIR_" ]; then
     rm -r "${_CI_DIR_}"
   fi
-  mkdir -p "$_CI_DIR_"
+  mkdir -p "$_CI_DIR_" && cd "$_CI_DIR_"
 
-  git clone --depth=1 --branch=$_BRANCH_ "$b"
+  curl $b -sSfL | sh -s -- --branch=$_BRANCH_
 }
 
 test_make_print_database () {
@@ -298,11 +293,14 @@ test_nore_auto_check () {
   test_configure
 }
 
-# test
-test_install_from_github
+# clone nore
+install_nore_from_github
+
+# env build
 env_ci_build
+
 # test_make_print_database
-# test_nore_where_command
+test_nore_where_command
 # test_nore_new_option
 # test_nore_symbol_option
 # test_nore_optimize_option
