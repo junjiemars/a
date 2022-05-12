@@ -114,55 +114,7 @@ test_nore_where_command () {
   test_configure where
 }
 
-test_nore_new_option () {
-	test_what "CC=$CC ./configure --new"
-  test_configure --new
-  test_make clean test
-}
-
-test_nore_symbol_option () {
-  local c="`basename $_CI_DIR_`.c"
-
-  test_what "CC=$CC ./configure --symbol-table=sym"
-  test_configure --symbol-table=sym
-  test_make clean test
-
-  cat <<END > "$c"
-#include <nore.h>
-#include <stdio.h>
-
-int main(void) {
-#if __DARWIN__
-    printf("Hello, Darwin!\n");
-#elif __LINUX__
-    printf("Hello, Linux!\n");
-#elif __WINNT__
-    printf("Hello, WinNT!\n");
-#else
-    printf("!panic, unknown OS\n");
-#endif
-    return 0;
-}
-END
-
-  case "$_OS_NAME_" in
-    Darwin)
-      sed "s/DARWIN:DARWIN/DARWIN:__DARWIN__/g" sym > sym1 2>/dev/null
-      ;;
-    Linux)
-      sed "s/LINUX:LINUX/LINUX:__LINUX__/g" sym > sym1 2>/dev/null
-      ;;
-    WinNT)
-      sed "s/WINNT:WINNT/WINNT:__WINNT__/g" sym > sym1 2>/dev/null
-      ;;
-  esac
-
-  test_what "CC=$CC ./configure --symbol-table=sym1"
-  test_configure --symbol-table=sym1
-  test_make clean test
-}
-
-test_nore_optimize_option () {
+test_c_program () {
   local c="`basename $_CI_DIR_`.c"
   local m="Makefile"
 
@@ -208,101 +160,22 @@ ci_test: ci
 	\$(CC) \$(CFLAGS) \$(INC) \$^ \$(bin_out)\$@
 END
 
-  test_what "CC=$CC ./configure --with-optimize=no"
-  test_configure --with-optimize=no
-  test_make clean test
-
   test_what "CC=$CC ./configure --with-optimize=yes"
   test_configure --with-optimize=yes
   test_make clean test
 }
 
-test_nore_std_option () {
-  local c="`basename $_CI_DIR_`.c"
-  local m="Makefile"
-
-  cat <<END > "$c"
-#include <nore.h>
-#include <stdio.h>
-#include <assert.h>
-
-int main(void) {
-  enum { N = 5 };
-  static_assert(N == 5, "N is not equal 5");
-  return 0;
-}
-END
-
-  cat <<END > "$m"
-include out/Makefile
-
-ci_root := ./
-ci_binout := \$(bin_path)/ci\$(bin_ext)
-
-ci: \$(ci_binout)
-ci_test: ci
-	\$(ci_binout)
-
-\$(ci_binout): \$(ci_root)/ci.c
-	\$(CC) \$(CFLAGS) \$(INC) \$^ \$(bin_out)\$@
-END
-
-  test_what "CC=$CC ./configure --with-std=yes"
-  test_configure "--with-std=yes"
-  test_make clean test
-
-  test_what "CC=$CC ./configure --with-std=-std=c11"
-  case "$_OS_NAME_" in
-    Darwin)   test_configure "--with-std=-std=c11" ;;
-    Linux)    test_configure "--with-std=-std=c11" ;;
-    WinNT|*)
-      case "$CC" in
-        cl)      test_configure "--with-std=-std:c11" ;;
-        gcc|*)   test_configure "--with-std=-std=c11" ;;
-      esac
-  esac
-  test_make clean test
-}
-
-test_nore_prefix_option () {
-  local d="${_CI_DIR_}/xxx"
-	test_what "CC=$CC ./configure --prefix=xxx"
-  test_configure --new
-  test_configure --prefix=xxx
-  test_make clean test install
-  if [ -d "$d" ]; then
-    rm -r "$d"
-  fi
-}
-
-test_nore_override_option () {
-	test_what "CC=$CC ./configure --new"
-  test_configure --new --with-optimize=yes --with-optimize=-Os
-  test_make clean test
-}
-
-test_nore_auto_check () {
-  local a="auto"
-  sed -e 's/^#//g' "${_ROOT_DIR_}/auto/check" > "${a}"
-  test_what "CC=$CC ./configure #auto"
-  test_configure
-}
-
 # clone nore
-install_nore_from_github
+if [ -n "$_INSIDE_CI_" ]; then
+  install_nore_from_github
+fi
 
 # env build
 env_ci_build
 
 # test_make_print_database
 test_nore_where_command
-# test_nore_new_option
-# test_nore_symbol_option
-# test_nore_optimize_option
-# test_nore_std_option
-# test_nore_prefix_option
-# test_nore_override_option
-# test_nore_auto_check
+test_c_program
 
 
 # clean CI directory
