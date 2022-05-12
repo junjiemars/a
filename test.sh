@@ -115,7 +115,7 @@ test_nore_where_command () {
 }
 
 test_c_program () {
-  local d="${_ROOT_DIR}/out"
+  local d="${_ROOT_DIR_}/out"
   local c="`basename $_CI_DIR_`.c"
   local m="Makefile"
 

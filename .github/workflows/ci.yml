@@ -109,7 +109,9 @@ jobs:
           mingw-w64-x86_64-gcc
           mingw-w64-x86_64-libgccjit
     - name: Setup Env
-      run: echo "_OS_ARCH_=$(uname -m)" >> $GITHUB_ENV
+      run: |
+        echo "_OS_ARCH_=$(uname -m)" >> $GITHUB_ENV
+        echo "_A_MARK_=$(uname -m)-${{ matrix.CC }}" >> $GITHUB_ENV
     - name: Build and Test
       env:
         _INSIDE_CI_: github
@@ -121,12 +123,12 @@ jobs:
       env:
         _ZIP_X_:
       run: |
-        zip -r c-windows-${{ env._OS_ARCH_ }}.zip out/ ${{ env._ZIP_X_ }}
+        zip -r c-windows-${{ env._A_MARK_ }}.zip out/ ${{ env._ZIP_X_ }}
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v1
       with:
-        name: c-windows-${{ env._OS_ARCH_ }}.zip
-        path: c-windows-${{ env._OS_ARCH_ }}.zip
+        name: c-windows-${{ env._A_MARK_ }}.zip
+        path: c-windows-${{ env._A_MARK_ }}.zip
 
 
 # EOF
