@@ -73,7 +73,7 @@ END
 }
 
 install_nore_from_github () {
-  # local b="https://raw.githubusercontent.com/junjiemars/nore/master/bootstrap.sh"
+  local b="https://raw.githubusercontent.com/junjiemars/nore/master/bootstrap.sh"
   test_what "install from github.com"
   if [ -d "$_CI_DIR_" ]; then
     rm -r "${_CI_DIR_}"
