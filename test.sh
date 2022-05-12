@@ -22,11 +22,6 @@ fi
 
 
 env_ci_build () {
-  if [ -d "$_CI_DIR_" ]; then
-    rm -r "${_CI_DIR_}"
-  fi
-  mkdir -p "$_CI_DIR_"
-
   echo "------------"
   echo "CC=$CC"
   echo "_ROOT_DIR_=$_ROOT_DIR_"
