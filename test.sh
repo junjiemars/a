@@ -115,7 +115,6 @@ test_nore_where_command () {
 }
 
 test_c_program () {
-  local d="${_ROOT_DIR_}/out"
   local c="`basename $_CI_DIR_`.c"
   local m="Makefile"
 
@@ -162,7 +161,7 @@ ci_test: ci
 END
 
   test_what "CC=$CC ./configure --with-optimize=yes"
-  test_configure --with-optimize=yes --out-dir="$d"
+  test_configure --with-optimize=yes
   test_make clean test
 }
 

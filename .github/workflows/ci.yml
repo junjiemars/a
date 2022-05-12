@@ -114,7 +114,7 @@ jobs:
         echo "_A_MARK_=$(uname -m)-${{ matrix.CC }}" >> $GITHUB_ENV
     - name: Build and Test
       env:
-        _INSIDE_CI_: github
+        _INSIDE_CI_: yes
         _CFG_OPT_: --with-release=yes --with-optimize=-Os --with-symbol=no
         CC: ${{ matrix.CC }}
       run: |
@@ -123,7 +123,7 @@ jobs:
       env:
         _ZIP_X_:
       run: |
-        zip -r c-windows-${{ env._A_MARK_ }}.zip out/ ${{ env._ZIP_X_ }}
+        zip -r c-windows-${{ env._A_MARK_ }}.zip ci/out/ ${{ env._ZIP_X_ }}
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v1
       with:
