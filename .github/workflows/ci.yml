@@ -121,7 +121,7 @@ jobs:
       env:
         _ZIP_X_:
       run: |
-        zip -r c-windows-${{ env._OS_ARCH_ }}.zip ci/out/ ${{ env._ZIP_X_ }}
+        zip -r c-windows-${{ env._OS_ARCH_ }}.zip out/ ${{ env._ZIP_X_ }}
     - name: Upload Build Artifact
       uses: actions/upload-artifact@v1
       with:
