@@ -154,7 +154,7 @@ ci_cppout := \$(bin_path)/ci\$(cpp_ext)
 ci: \$(ci_binout)
 ci_test: ci
 	\$(ci_binout)
-   cat \$(ci_cppout)
+	cat \$(ci_cppout)
 
 \$(ci_binout): \$(ci_cppout)
 	\$(CC) \$(CFLAGS) \$^ \$(bin_out)\$@
