@@ -122,26 +122,23 @@ test_c_program () {
 #include <nore.h>
 #include <stdio.h>
 
+#if !defined(_unused_of_)
+#  if defined(CLANG) || defined(GCC)
+#    define _unused_of_(x)  __attribute__((unused)) x
+#  elif defined(MSVC)
+#    define _unused_of_(x)  __pragma(warning(suppress:4100 4101)) x
+#  else
+#    define _unused_of_
+#  endif
+#endif
+
 #if (MSVC)
 #  pragma warning(disable : 4996)
 #endif
 
-int
-fibonacci(int n, int p, int acc) {
-  if (0 == n) {
-    return acc;
-  }
-  return fibonacci(n-1, acc, p+acc);
-}
 
-int main(int argc, char **argv) {
-  if (argc < 2) {
-    return 1;
-  }
-  int n;
-  sscanf(argv[1], "%i", &n);
-  int retval = fibonacci(n, 1, 0);
-  printf("fibonacci(%i)=%i\n", n, retval);
+int main(_unused_of_(int argc), _unused_of_(char **argv)) {
+  printf("abc\n");
   return 0;
 }
 END
@@ -151,13 +148,18 @@ include out/Makefile
 
 ci_root := ./
 ci_binout := \$(bin_path)/ci\$(bin_ext)
+ci_cppout := \$(bin_path)/ci\$(cpp_ext)
 
 ci: \$(ci_binout)
 ci_test: ci
-	\$(ci_binout) 5
+	\$(ci_binout)
+   cat $(ci_cppout)
 
-\$(ci_binout): \$(ci_root)/ci.c
-	\$(CC) \$(CFLAGS) \$(INC) \$^ \$(bin_out)\$@
+\$(ci_binout): \$(ci_cppout)
+	\$(CC) \$(CFLAGS) \$^ \$(bin_out)\$@
+
+\$(ci_cppout): \$(ci_root)/ci.c
+	\$(CC) \$(CPPFLAGS) \$(INC) \$^ \$(cpp_out)\$@
 END
 
   test_what "CC=$CC ./configure --with-optimize=yes"
@@ -175,7 +177,7 @@ env_ci_build
 
 # test_make_print_database
 test_nore_where_command
-# test_c_program
+test_c_program
 # cat /etc/passwd
 
 
