@@ -143,6 +143,7 @@ int main(_unused_of_(int argc), _unused_of_(char **argv)) {
 }
 END
 
+
   cat <<END > "$m"
 include out/Makefile
 
@@ -153,7 +154,7 @@ ci_cppout := \$(bin_path)/ci\$(cpp_ext)
 ci: \$(ci_binout)
 ci_test: ci
 	\$(ci_binout)
-   cat $(ci_cppout)
+   cat \$(ci_cppout)
 
 \$(ci_binout): \$(ci_cppout)
 	\$(CC) \$(CFLAGS) \$^ \$(bin_out)\$@
