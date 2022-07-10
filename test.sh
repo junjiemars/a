@@ -149,7 +149,7 @@ include out/Makefile
 
 ci_root := ./
 ci_binout := \$(bin_path)/ci\$(bin_ext)
-ci_cppout := \$(bin_path)/ci\$(cpp_ext)
+ci_cppout := \$(tmp_path)/ci\$(cpp_ext)
 
 ci: \$(ci_binout)
 ci_test: ci
@@ -160,7 +160,7 @@ ci_test: ci
 	\$(CC) \$(CFLAGS) \$^ \$(bin_out)\$@
 
 \$(ci_cppout): \$(ci_root)/ci.c
-	\$(CC) \$(CPPFLAGS) \$(INC) \$^ \$(cpp_out)\$@
+	\$(CC) \$(CPPFLAGS) \$(INC) \$(nm_stage_pre) \$^ \$(cpp_out)\$@
 END
 
   test_what "CC=$CC ./configure --with-optimize=yes"
