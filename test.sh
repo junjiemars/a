@@ -126,7 +126,7 @@ test_c_program () {
 #  if (CLANG) || (GCC)
 #    define _unused_(x)  __attribute__((unused)) x
 #  elif (MSVC)
-#    define _unused_(x)  __pragma(warning(suppress:4100 4101)) x
+#    define _unused_(x)  __pragma(warning(suppress:4100 4101 4189)) x
 #  else
 #    define _unused_(x)  ((void)(sizeof(x,0)))
 #  endif
