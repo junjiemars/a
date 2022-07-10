@@ -89,8 +89,8 @@ jobs:
     strategy:
       matrix:
         include:
-          # - CC: "cl"
-          - CC: "gcc"
+          - CC: "cl"
+          # - CC: "gcc"
     defaults:
       run:
         shell: msys2 {0}
