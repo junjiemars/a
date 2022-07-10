@@ -122,13 +122,13 @@ test_c_program () {
 #include <nore.h>
 #include <stdio.h>
 
-#if !defined(_unused_of_)
-#  if defined(CLANG) || defined(GCC)
-#    define _unused_of_(x)  __attribute__((unused)) x
-#  elif defined(MSVC)
-#    define _unused_of_(x)  __pragma(warning(suppress:4100 4101)) x
+#if !defined(_unused_)
+#  if (CLANG) || (GCC)
+#    define _unused_(x)  __attribute__((unused)) x
+#  elif (MSVC)
+#    define _unused_(x)  __pragma(warning(suppress:4100 4101)) x
 #  else
-#    define _unused_of_
+#    define _unused_(x)  ((void)(sizeof(x,0)))
 #  endif
 #endif
 
@@ -137,8 +137,8 @@ test_c_program () {
 #endif
 
 
-int main(_unused_of_(int argc), _unused_of_(char **argv)) {
-  int _unused_of(x) = 0x1122;
+int main(_unused_(int argc), _unused_(char **argv)) {
+  _unused_(int x) = 0x1122;
   printf("abc\n");
   return 0;
 }
