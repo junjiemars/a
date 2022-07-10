@@ -176,7 +176,7 @@ env_ci_build
 # test_make_print_database
 test_nore_where_command
 # test_c_program
-cat /etc/passwd
+# cat /etc/passwd
 
 
 echo "#!completed"
