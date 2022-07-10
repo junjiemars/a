@@ -138,6 +138,7 @@ test_c_program () {
 
 
 int main(_unused_of_(int argc), _unused_of_(char **argv)) {
+  int _unused_of(x) = 0x1122;
   printf("abc\n");
   return 0;
 }
