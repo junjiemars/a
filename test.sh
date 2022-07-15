@@ -122,7 +122,19 @@ test_c_program () {
 #include <nore.h>
 #include <stdio.h>
 
+#if !defined(_unused_)
+#  if (MSVC)
+#    define _unused_(x)  __pragma(warning(suppress:4100 4101 4189)) x
+#  elif defined(__has_attribute) && __has_attribute(unused)
+#    define _unused_(x)  __attribute__((unused)) x
+#  else
+#    define _unused_(x)  x
+#  endif
+#endif
+
+
 int main(void) {
+  _unused_(int x) = 0;
   printf("sizeof(fpos_t) = %zu\n", sizeof(fpos_t));
   return 0;
 }
