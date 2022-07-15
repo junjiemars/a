@@ -122,24 +122,8 @@ test_c_program () {
 #include <nore.h>
 #include <stdio.h>
 
-#if !defined(_unused_)
-#  if (CLANG) || (GCC)
-#    define _unused_(x)  __attribute__((unused)) x
-#  elif (MSVC)
-#    define _unused_(x)  __pragma(warning(suppress:4100 4101 4189)) x
-#  else
-#    define _unused_(x)  ((void)(sizeof(x,0)))
-#  endif
-#endif
-
-#if (MSVC)
-#  pragma warning(disable : 4996)
-#endif
-
-
-int main(_unused_(int argc), _unused_(char **argv)) {
-  _unused_(int x) = 0x1122;
-  printf("abc\n");
+int main(void) {
+  printf("sizeof(fpos_t) = %zu\n", sizeof(fpos_t));
   return 0;
 }
 END
