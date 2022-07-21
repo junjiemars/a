@@ -122,9 +122,10 @@ test_c_program () {
 #include <nore.h>
 #include <stdio.h>
 
+#define _nm_attr_unused_ __pragma(warning(suppress:4100 4101 4189))
 
 int main(void) {
-  __pragma(warning(suppress:4100 4101 4189)) int x = 0;
+  _nm_attr_unused_ int x = 0;
   printf("sizeof(fpos_t) = %zu\n", sizeof(fpos_t));
   return 0;
 }
@@ -141,7 +142,7 @@ ci_cppout := \$(tmp_path)/ci\$(cpp_ext)
 ci: \$(ci_binout)
 ci_test: ci
 	\$(ci_binout)
-	cat \$(ci_cppout)
+	# cat \$(ci_cppout)
 
 \$(ci_binout): \$(ci_cppout)
 	\$(CC) \$(CFLAGS) \$^ \$(bin_out)\$@
