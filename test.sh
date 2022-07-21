@@ -124,7 +124,7 @@ test_c_program () {
 
 #if !defined(__has_attribute)
 #  if !defined(__attribute)
-#    define __attribute__(_) _
+#    define __attribute__(_)  _
 #  endif
 #endif
 
@@ -140,16 +140,10 @@ test_c_program () {
 
 
 #if defined(__has_attribute) && __has_attribute(fallthrough)
-#elif !defined(fallthrough)
-#  if defined(__attribute__)
+#elif !defined(__has_attribute) && defined(__attribute__)
+#  if !defined(fallthrough)
 #    define fallthrough  void
-#  end;
-#endif
-
-
-#if defined(__has_attribute) && __has_attribute(fallthrough)
-#elif !defined(fallthrough)
-#  define fallthrough
+#  endif;
 #endif
 
 static void fn(void);
