@@ -127,11 +127,19 @@ test_c_program () {
 #  define __attribute__(unused) __pragma unused
 #endif
 
+static void fn(void);
+
 int main(void) {
   __attribute__((unused)) int x = 0;
   __attribute__((unused)) int y = 0;
   printf("sizeof(fpos_t) = %zu\n", sizeof(fpos_t));
   return 0;
+}
+
+void
+fn(void)
+{
+  printf("XXX\n");
 }
 END
 
