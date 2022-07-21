@@ -158,7 +158,7 @@ int main(void) {
   printf("sizeof(fpos_t) = %zu\n", sizeof(fpos_t));
   switch (z)
   {
-    case 1
+    case 1:
       z++;
        __attribute__((fallthrough));
     default:
