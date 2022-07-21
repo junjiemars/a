@@ -122,9 +122,13 @@ test_c_program () {
 #include <nore.h>
 #include <stdio.h>
 
-#if !defined(unused)
-#  define unused warning(suppress:4100 4101 4189)
-#  define __attribute__(unused) __pragma unused
+#if (MSVC)
+#  if !defined(unused)
+#    define unused  warning(suppress:4100 4101 4189)
+#    define __attribute__(unused)  __pragma unused
+#  endif
+#elif !(defined(__has_attribute) && __has_attribute(unused))
+#  define __attribute__(_)
 #endif
 
 static void fn(void);
