@@ -122,6 +122,7 @@ test_c_program () {
 #include <nore.h>
 #include <stdio.h>
 
+
 int main(void) {
   __pragma(warning(suppress:4100 4101 4189)) int x = 0;
   printf("sizeof(fpos_t) = %zu\n", sizeof(fpos_t));
