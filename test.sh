@@ -123,7 +123,7 @@ test_c_program () {
 #include <stdio.h>
 
 #define unused warning(suppress:4100 4101 4189)
-#define __attribute__(unused) __pragma(unused)
+#define __attribute__(unused) __pragma unused
 
 int main(void) {
   __attribute__((unused)) int x = 0;
