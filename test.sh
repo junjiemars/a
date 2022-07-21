@@ -122,8 +122,8 @@ test_c_program () {
 #include <nore.h>
 #include <stdio.h>
 
-#define unused (suppress:4100 4101 4189)
-#define __attribute__(unused) __pragma(warning(unused))
+#define unused suppress:4100 4101 4189
+#define __attribute__(unused) __pragma(warning unused )
 #undef unused
 
 int main(void) {
@@ -144,7 +144,7 @@ ci_cppout := \$(tmp_path)/ci\$(cpp_ext)
 ci: \$(ci_binout)
 ci_test: ci
 	\$(ci_binout)
-	# cat \$(ci_cppout)
+	cat \$(ci_cppout)
 
 \$(ci_binout): \$(ci_cppout)
 	\$(CC) \$(CFLAGS) \$^ \$(bin_out)\$@
