@@ -141,6 +141,14 @@ test_c_program () {
 
 #if defined(__has_attribute) && __has_attribute(fallthrough)
 #elif !defined(fallthrough)
+#  if defined(__attribute__)
+#    define fallthrough  void
+#  end;
+#endif
+
+
+#if defined(__has_attribute) && __has_attribute(fallthrough)
+#elif !defined(fallthrough)
 #  define fallthrough
 #endif
 
