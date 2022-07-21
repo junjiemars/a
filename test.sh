@@ -153,8 +153,16 @@ static void fn(void);
 int main(void) {
   __attribute__((unused)) int x = 0;
   __attribute__((unused)) int y = 0;
+  int z = 1;
   printf("sizeof(fpos_t) = %zu\n", sizeof(fpos_t));
-  __attribute__((fallthrough));
+  switch (z)
+  {
+    case 1
+      z++;
+       __attribute__((fallthrough));
+    default:
+      break;
+  }
   return 0;
 }
 
