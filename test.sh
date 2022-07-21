@@ -123,7 +123,7 @@ test_c_program () {
 #include <stdio.h>
 
 #if (MSVC)
-#  if !(defined(unused) || defined(__attribute__))
+#  if !(defined(__attribute__) || defined(unused))
 #    define unused  warning(suppress:4100 4101 4189)
 #    define __attribute__(unused)  __pragma unused
 #  endif
@@ -167,8 +167,8 @@ ci_cppout := \$(tmp_path)/ci\$(cpp_ext)
 
 ci: \$(ci_binout)
 ci_test: ci
-	\$(ci_binout)
-	cat \$(ci_cppout)
+	@cat \$(ci_cppout)
+	@\$(ci_binout)
 
 \$(ci_binout): \$(ci_cppout)
 	\$(CC) \$(CFLAGS) \$^ \$(bin_out)\$@
