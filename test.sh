@@ -123,11 +123,20 @@ test_c_program () {
 #include <stdio.h>
 
 #if (MSVC)
-#  if !defined(unused)
+#  if !(defined(unused) || defined(__attribute__))
 #    define unused  warning(suppress:4100 4101 4189)
 #    define __attribute__(unused)  __pragma unused
 #  endif
-#elif !(defined(__has_attribute) && __has_attribute(unused))
+#elif defined(__has_attribute) && __has_attribute(unused)
+#elif !(defined(__attribute__) || defined(unused))
+#  define unused
+#  define __attribute__(_)
+#endif
+
+
+#if defined(__has_attribute) && __has_attribute(fallthrough)
+#elif !(defined(__attribute__) || defined(fallthrough))
+#  define fallthrough
 #  define __attribute__(_)
 #endif
 
@@ -137,6 +146,7 @@ int main(void) {
   __attribute__((unused)) int x = 0;
   __attribute__((unused)) int y = 0;
   printf("sizeof(fpos_t) = %zu\n", sizeof(fpos_t));
+  __attribute__((fallthrough));
   return 0;
 }
 
