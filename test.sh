@@ -179,7 +179,7 @@ ci_test: ci
 
 \$(ci_cppout): \$(ci_root)/ci.c
 	\$(CC) \$(CPPFLAGS) \$(INC) \$(nm_stage_pre) \$^ \$(cpp_out)\$@
-	@cat \$<
+	@cat \$@
 
 END
 
