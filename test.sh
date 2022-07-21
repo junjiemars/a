@@ -122,10 +122,10 @@ test_c_program () {
 #include <nore.h>
 #include <stdio.h>
 
-#define _nm_attr_unused_ __pragma(warning(suppress:4100 4101 4189))
+#define __attribute__((unused)) __pragma(warning(suppress:4100 4101 4189))
 
 int main(void) {
-  _nm_attr_unused_ int x = 0;
+  __attribute__((unused)) int x = 0;
   printf("sizeof(fpos_t) = %zu\n", sizeof(fpos_t));
   return 0;
 }
