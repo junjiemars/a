@@ -94,7 +94,7 @@ jobs:
       matrix:
         include:
           - CC: "cl"
-          # - CC: "gcc"
+          - CC: "gcc"
     defaults:
       run:
         shell: msys2 {0}

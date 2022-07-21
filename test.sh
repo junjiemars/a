@@ -124,7 +124,7 @@ test_c_program () {
 
 #if !defined(__has_attribute)
 #  if !defined(__attribute)
-#    define __attribute__(_)  _
+#    define __attribute__(...)  __VA_ARGS__
 #  endif
 #endif
 
@@ -134,15 +134,17 @@ test_c_program () {
 #    define unused  __pragma(warning(suppress:4100 4101 4189))
 #  endif
 #elif defined(__has_attribute) && __has_attribute(unused)
-#elif !defined(unused)
-#  define unused
+#elif !defined(__has_attribute) && defined(__attribute__)
+#   if !defined(unused)
+#     define unused
+#   endif
 #endif
 
 
 #if defined(__has_attribute) && __has_attribute(fallthrough)
 #elif !defined(__has_attribute) && defined(__attribute__)
 #  if !defined(fallthrough)
-#    define fallthrough  void
+#    define fallthrough
 #  endif;
 #endif
 
