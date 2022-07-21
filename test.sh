@@ -125,7 +125,6 @@ test_c_program () {
 #if !defined(unused)
 #  define unused warning(suppress:4100 4101 4189)
 #  define __attribute__(unused) __pragma unused
-#  undef unused
 #endif
 
 int main(void) {
