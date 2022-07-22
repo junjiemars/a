@@ -124,7 +124,7 @@ test_c_program () {
 
 #if !defined(__has_attribute)
 #  if !defined(__attribute)
-#    define __attribute__(...)  ## __VA_ARGS__
+#    define __attribute__(...)   __VA_ARGS__
 #  endif
 #endif
 
@@ -136,7 +136,7 @@ test_c_program () {
 #elif defined(__has_attribute) && __has_attribute(unused)
 #elif !defined(__has_attribute) && defined(__attribute__)
 #   if !defined(unused)
-#     define unused
+#     define unused  __VA_ARGS__
 #   endif
 #endif
 
