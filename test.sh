@@ -122,9 +122,10 @@ test_c_program () {
 #include <nore.h>
 #include <stdio.h>
 
+
 #if !defined(__has_attribute)
 #  if !defined(__attribute)
-#    define __attribute__(...)   __VA_ARGS__
+#    define __attribute__(_, ...)  _ __VA_ARGS__
 #  endif
 #endif
 
