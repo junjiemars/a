@@ -124,7 +124,7 @@ test_c_program () {
 
 #if !defined(__has_attribute)
 #  if !defined(__attribute)
-#    define __attribute__(...)  __VA_ARGS__
+#    define __attribute__(...)  ## __VA_ARGS__
 #  endif
 #endif
 
