@@ -121,6 +121,8 @@ test_c_program () {
   cat <<END > "$c"
 #include <nore.h>
 #include <stdio.h>
+#include <windows.h>
+#include <process.h>
 
 #if !defined(__has_attribute)
 #  if !defined(__attribute)
@@ -162,13 +164,14 @@ int main(void) {
     default:
       break;
   }
+  fn();
   return 0;
 }
 
 void
 fn(void)
 {
-  printf("XXX\n");
+  printf("%d\n", _getpid());
 }
 END
 
