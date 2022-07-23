@@ -122,7 +122,6 @@ test_c_program () {
 #include <nore.h>
 #include <stdio.h>
 
-
 #if !defined(__has_attribute)
 #  if !defined(__attribute)
 #    define _esc_(...)  __VA_ARGS__
@@ -138,7 +137,7 @@ test_c_program () {
 #elif defined(__has_attribute) && __has_attribute(unused)
 #elif !defined(__has_attribute) && defined(__attribute__)
 #   if !defined(unused)
-#     define unused  __VA_ARGS__
+#     define unused
 #   endif
 #endif
 
@@ -147,7 +146,7 @@ test_c_program () {
 #elif !defined(__has_attribute) && defined(__attribute__)
 #  if !defined(fallthrough)
 #    define fallthrough
-#  endif;
+#  endif
 #endif
 
 static void fn(void);
