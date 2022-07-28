@@ -72,7 +72,7 @@ END
   fi
 }
 
-install_nore_from_github () {
+clone_nore_from_github () {
   local b="https://raw.githubusercontent.com/junjiemars/nore/master/bootstrap.sh"
   test_what "install from github.com"
   if [ -d "$_CI_DIR_" ]; then
@@ -120,9 +120,26 @@ test_c_program () {
 
   cat <<END > "$c"
 #include <nore.h>
-#include <stdio.h>
-#include <windows.h>
-#include <process.h>
+
+#if (DARWIN)
+#  if !defined(_DARWIN_C_SOURCE)
+#    define _DARWIN_C_SOURCE
+#  endif
+#endif
+
+
+#if (LINUX)
+#  if !defined(_GNU_SOURCE)
+#    define _GNU_SOURCE
+#  endif
+#endif
+
+
+#if defined(_POSIX_C_SOURCE)
+#  undef _POSIX_C_SOURCE
+#endif
+#define _POSIX_C_SOURCE  200809L
+
 
 #if !defined(__has_attribute)
 #  if !defined(__attribute)
@@ -149,6 +166,93 @@ test_c_program () {
 #  endif
 #endif
 
+
+
+#if !(NM_HAVE_RESTRICT)
+#  if (NM_HAVE___RESTRICT)
+#    define restrict __restrict
+#  else
+#    define restrict
+#  endif
+#endif  /* NM_HAVE_RESTRICT */
+
+
+
+#if !defined(_isut_)
+#  define _isut_(t)  (((t)~1) > 0)
+#endif  /* _isut_ */
+
+
+#if !defined(_nof_)
+#  define _nof_(a)  (sizeof(a)/sizeof(*(a)))
+#endif  /* _nof_ */
+
+
+#if !defined(_diff_)
+#  define _diff_(l, r, w)  (((char*)(r) - (char*)(l)) / (w))
+#endif  /* _diff_ */
+
+
+#if !defined(_max_)
+#  define _max_(a, b)  (((a) > (b)) ? (a) : (b))
+#endif  /* _max_ */
+
+
+#if !defined(_min_)
+#  define _min_(a, b)  (((a) < (b)) ? (a) : (b))
+#endif  /* _min_ */
+
+
+#if !defined(_str_)
+#  define _str_(s)  #s
+#endif  /* _str_ */
+
+
+
+#define _swp_(a, b, w)                            \
+do                                                \
+  {                                               \
+    int    w1_ =  (int) (w);                      \
+    int    n1_ =  (w1_ + 7) / 8;                  \
+    char  *a1_ =  (char *) (a);                   \
+    char  *b1_ =  (char *) (b);                   \
+    char   t1_ =  0;                              \
+    switch (w1_ % 8) {                            \
+    case 0: do { t1_=*a1_;*a1_++=*b1_;*b1_++=t1_; \
+        __attribute__((fallthrough));             \
+    case 7:      t1_=*a1_;*a1_++=*b1_;*b1_++=t1_; \
+        __attribute__((fallthrough));             \
+    case 6:      t1_=*a1_;*a1_++=*b1_;*b1_++=t1_; \
+        __attribute__((fallthrough));             \
+    case 5:      t1_=*a1_;*a1_++=*b1_;*b1_++=t1_; \
+        __attribute__((fallthrough));             \
+    case 4:      t1_=*a1_;*a1_++=*b1_;*b1_++=t1_; \
+        __attribute__((fallthrough));             \
+    case 3:      t1_=*a1_;*a1_++=*b1_;*b1_++=t1_; \
+        __attribute__((fallthrough));             \
+    case 2:      t1_=*a1_;*a1_++=*b1_;*b1_++=t1_; \
+        __attribute__((fallthrough));             \
+    case 1:      t1_=*a1_;*a1_++=*b1_;*b1_++=t1_; \
+               } while (--n1_ > 0);               \
+    }                                             \
+  } while (0)
+
+#include <assert.h>
+
+
+#if !(NM_HAVE_STATIC_ASSERT)
+#  ifdef static_assert
+#    undef static_assert
+#  endif
+#  define static_assert(e, m) enum {static_assert = 1/!!((e) && (m))}
+
+#endif  /* NM_HAVE_STATIC_ASSERT */
+
+#if !defined(NM_HAVE_STDINT_H)
+#  error "<stdint.h> no found"
+#endif
+
+
 #include <stdint.h>
 
 
@@ -163,33 +267,93 @@ typedef __int64           int64_t;
 typedef unsigned __int64  uint64_t;
 #endif
 
-#include <BaseTsd.h>
+
+#if (NM_HAVE_SSIZE_T)
+#  if (MSVC)
+#    include <BaseTsd.h>
+typedef SSIZE_T ssize_t;
+#  else
+#    include <sys/types.h>
+#  endif
+#else
+typedef long ssize_t;
+#endif
 
 
-static void fn(void);
+#if (MSVC)
+#  pragma warning(disable:4996)
+#endif  /* _CRT_SECURE_NO_WARNINGS */
 
-int main(void) {
-  __attribute__((unused)) int x = 0;
-  __attribute__((unused)) int y = 0;
-  int z = 1;
-  printf("sizeof(fpos_t) = %zu\n", sizeof(fpos_t));
-  switch (z)
-  {
-    case 1:
-      z++;
-       __attribute__((fallthrough));
-    default:
-      break;
-  }
-  fn();
+
+#include <string.h>
+
+
+#if !(NM_HAVE_STRDUP)
+#  error "strdup no found"
+#else
+#  if (MSVC)
+#    define strdup  _strdup
+#  endif
+#endif  /* strdup */
+
+
+
+/* #include <nio.h> */
+/* #include <stddef.h> */
+
+
+
+#if (MSVC)
+#  include <windows.h>
+#  include <process.h>
+#else
+#  include <sys/types.h>
+#  include <unistd.h>
+#endif
+
+
+#if !(NM_HAVE_SLEEP)
+#  error "sleep no found"
+#elif (MSVC)
+#  define sleep(x)  Sleep((x) * 1000)
+#endif  /* sleep */
+
+
+#if !(NM_HAVE_GETPID)
+#  error "getpid no found"
+#elif (WINNT)
+#  define getpid  _getpid
+#endif  /* getpid */
+
+#include <stdio.h>
+
+static void test_sleep(void);
+static void test_getpid(void);
+
+
+int
+main(void)
+{
+  test_sleep();
+  test_getpid();
+
   return 0;
 }
 
+
 void
-fn(void)
+test_sleep(void)
 {
-  printf("%d\n", _getpid());
+  printf("sleep(1) ...\n");
+  sleep(1);
 }
+
+void
+test_getpid(void)
+{
+  printf("pid: %d\n", getpid());
+}
+
 END
 
 
@@ -221,7 +385,7 @@ END
 
 # clone nore
 if [ -n "$_INSIDE_CI_" ]; then
-  install_nore_from_github
+  clone_nore_from_github
 fi
 
 # env build
