@@ -151,16 +151,13 @@ test_c_program () {
 #endif
 
 
-#if !(NM_HAVE_SLEEP)
-#  error "sleep no found"
-#elif (MSVC)
+
+#if (MSVC)
 #  define sleep(x)  Sleep((x) * 1000)
 #endif  /* sleep */
 
 
-#if !(NM_HAVE_GETPID)
-#  error "getpid no found"
-#elif (WINNT)
+#if (WINNT)
 #  define getpid  _getpid
 #endif  /* getpid */
 
