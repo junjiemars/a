@@ -122,6 +122,7 @@ test_c_program () {
 #include <nore.h>
 
 #include <nore.h>
+#include <stdio.h>
 
 #if (DARWIN)
 #  if !defined(_DARWIN_C_SOURCE)
@@ -143,6 +144,10 @@ test_c_program () {
 #else
 #  include <sys/types.h>
 #  include <unistd.h>
+#endif
+
+#if !defined(ssize_t)
+#  define long int  ssize_t
 #endif
 
 
