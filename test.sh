@@ -146,8 +146,8 @@ test_c_program () {
 #  include <unistd.h>
 #endif
 
-#if !defined(ssize_t)
-#  define long int  ssize_t
+#if (MSVC)
+typedef SSIZE_T  ssize_t;
 #endif
 
 
